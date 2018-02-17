@@ -5,9 +5,18 @@ page-home {
   }
 
   ion-footer button, ion-refresher-content, .fixed-content, ion-item-options button {
-    background-color: #c51a4a !important;
+    background-color: #0d335f !important;
   }
 
+  ion-footer {
+    .button {
+      padding: 16px;
+    }
+    button .button-inner {
+      font-size: 1.2em;
+      text-transform: none;
+    }
+  }
   ion-item-options button {
    ion-icon {
      font-size: 1.5em;
@@ -29,48 +38,47 @@ page-home {
       }
     }
     .item-inner {
-      border-bottom-color: #c51a4a !important;
+      border-bottom-color: #0d335f !important;
     }
   }
 
-  img {
-    max-width: 30px;
-  }
-
-  .scanProx {
-    color: #c51a4a;
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  .clicked {
-    color: white !important;
-    background-color: #c51a4a;
-  }
-  .notClicked {
-
-  }
-
   .list > .item-wrapper:last-child .item-block {
-    border-bottom-color: #c51a4a !important;
+    border-bottom-color: #0d335f !important;
   }
 
   .list > .item-block:first-child {
-    border-bottom-color: #c51a4a !important;
+    border-bottom-color: #0d335f !important;
   }
 
   .toolbar-background {
-    background-color: white;
-    border-bottom: 1px solid #c51a4a !important;
+    background-color: #0d335f;
   }
 
+  .title {
+    padding-left: 16px;
+    .toolbar-title {
+      padding-left: 0;
+      text-align: left;
+      color: white;
+    }
+  }
+
+  .refresher-pulling-icon, .refresher-pulling, .refresher-refreshing-icon {
+    color: white;
+    circle {
+      stroke: white !important;
+    }
+  }
   .spinner {
     display: block;
     margin: auto;
   }
   .name {
+    color: #183782;
     font-weight: bold;
   }
   .mac {
+    color: #575656;
     margin-top: 3px;
   }
 }

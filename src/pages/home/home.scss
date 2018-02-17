@@ -1,3 +1,31 @@
 page-home {
+  button {
+    margin: 0 !important;
+  }
+  ion-list {
+  }
+  ion-item {
+    position: relative;
+    button {
+      background-color: transparent;
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      ion-icon {
+        font-size: 1.5em;
+      }
+    }
+  }
 
+  .spinner {
+    display: block;
+    margin: auto;
+  }
+  .name {
+    font-weight: bold;
+  }
+  .mac {
+    margin-top: 3px;
+  }
 }

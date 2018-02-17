@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class BeaconService {
 
-  private baseURL = "http://10.200.18.137:8080/beacon";
+  private baseURL = "http://10.200.20.48:8080/beacon";
   constructor(private http: HttpClient) {
   }
 
@@ -50,8 +50,9 @@ export class BeaconService {
   }
 
   deleteBeacon(beacon: any) {
+    console.log(beacon)
     return new Promise(resolve => {
-      this.http.delete(this.baseURL, beacon)
+      this.http.delete(this.baseURL + "/" + beacon.macAddress)
         .subscribe(() => resolve())
     })
   }

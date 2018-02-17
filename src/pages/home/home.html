@@ -1,24 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Beacon Adder
+      <img src="http://blog.creatingdrew.com/wp-content/uploads/2015/11/qC2eT.png">
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let beacon of beacons">
-      <div class="name">
-        {{beacon.name}}
-      </div>
-      <div class="mac">
-        {{beacon.macAddress}}
-      </div>
-      <button (click)="removeBeacon(beacon)">
-        <ion-icon name="md-close"></ion-icon>
-      </button>
-    </ion-item>
+    <ion-item-sliding *ngFor="let beacon of beacons">
+      <ion-item>
+        <div class="name">
+          {{beacon.name}}
+        </div>
+        <div class="mac">
+          {{beacon.macAddress}}
+        </div>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="removeBeacon(beacon)">
+          <ion-icon name="ios-trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-spinner *ngIf="isLoading || secondLoading" class="spinner">
   </ion-spinner>
@@ -28,3 +35,5 @@
     Add a Beacon
   </button>
 </ion-footer>
+
+

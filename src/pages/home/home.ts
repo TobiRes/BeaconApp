@@ -12,12 +12,15 @@ export class HomePage {
   beacons: any[] = []
   isLoading: boolean = false;
   secondLoading: boolean = false;
+  scanningProximity: boolean = false;
 
   constructor(public navCtrl: NavController,
               private ble: BLE,
+              private proxBle: BLE,
               private beaconService: BeaconService,
               private toastCtrl: ToastController) {
     this.getAllBeacons()
+    this.scanProximity()
   }
 
   scanBeacon(){
@@ -40,6 +43,24 @@ export class HomePage {
      }, 7000);
   }
 
+  removeBeacon(beacon: any) {
+    this.beaconService.deleteBeacon(beacon)
+      .then(() => {
+        this.presentDeleteToast()
+      })
+  }
+
+  refresh(refresher: any){
+    this.isLoading = true;
+    this.beaconService.getBeacons()
+      .then((beacons: any []) => {
+        this.beacons = beacons;
+        this.isLoading = false;
+        refresher.complete();
+      })
+      .catch(() => refresher.complete())
+  }
+
   private getAllBeacons() {
     this.isLoading = true;
     this.beaconService.getBeacons()
@@ -49,19 +70,30 @@ export class HomePage {
       })
   }
 
-  removeBeacon(beacon: any) {
-    this.beaconService.deleteBeacon(beacon)
-      .then(() => {
-        this.presentToast()
-      })
-  }
-
-  private presentToast() {
+  private presentDeleteToast() {
     let toast = this.toastCtrl.create({
       message: 'Succesfully Deleted Beacon',
       duration: 3000,
       position: 'top'
     });
     toast.present();
+  }
+
+  private scanProximity() {
+    this.scanningProximity = !this.scanningProximity;
+    if(this.scanningProximity){
+      let allIds: string[] = [];
+      this.beacons.forEach((beacon) => {
+        allIds.push(beacon.macAddress);
+      })
+      this.proxBle.startScanWithOptions(allIds, "reportDuplicates").subscribe(
+        foundBeacon => this.calculateDistance(foundBeacon),
+        (err) => console.error(err)
+      )
+    }
+  }
+
+  private calculateDistance(foundBeacon: any) {
+    ß
   }
 }

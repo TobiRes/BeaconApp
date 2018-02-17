@@ -8,19 +8,19 @@ export class BeaconService {
   constructor(private http: HttpClient) {
   }
 
-  registerBeacon(beaconValues) {
+  registerBeacon(beaconData) {
     return new Promise(resolve => {
-      let beaconData = this.getBeaconToRegister(beaconValues);
       let body = {
         macAddress: beaconData.macAddress,
         name: beaconData.name
       }
+      console.log(body)
       this.http.post(this.baseURL, body)
         .subscribe(() => resolve())
     })
   }
 
-  private getBeaconToRegister(beaconValues: any[]) {
+  getBeaconToRegister(beaconValues: any[]) {
     let currentBeacon = {
       name: "test",
       macAddress: "test",

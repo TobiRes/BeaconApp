@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {BLE} from "@ionic-native/ble";
 import {BeaconService} from "../../services/beacon.service";
 
@@ -17,7 +17,8 @@ export class HomePage {
   constructor(public navCtrl: NavController,
               private ble: BLE,
               private beaconService: BeaconService,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private alertCtrl: AlertController) {
     this.getAllBeacons()
   }
 
@@ -31,12 +32,8 @@ export class HomePage {
      setTimeout(() => {
        this.ble.stopScan().then( () => {
          this.secondLoading = false;
-         this.beaconService.registerBeacon(allBeacons)
-           .then(() => {
-             this.secondLoading = false;
-             this.getAllBeacons()
-           })
-           .catch(() => this.secondLoading = false)
+         let beaconToRegister = this.beaconService.getBeaconToRegister(allBeacons);
+         this.confirmBeacon(beaconToRegister);
        })
      }, 7000);
   }
@@ -63,6 +60,39 @@ export class HomePage {
         refresher.complete();
       })
       .catch(() => refresher.complete())
+  }
+
+  confirmBeacon(beacon) {
+    let alert = this.alertCtrl.create({
+      title: 'Enter Beacon-Name',
+      message: 'Name your new Beacon (' + beacon.macAddress + ")",
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Enter Name...'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            this.secondLoading = false;
+          }
+        },
+        {
+          text: 'Register',
+          handler: (data) => {
+            beacon.name = data.name;
+            this.beaconService.registerBeacon(beacon)
+              .then(() => {
+                this.secondLoading = false;
+                this.getAllBeacons();
+              })
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   private getAllBeacons() {

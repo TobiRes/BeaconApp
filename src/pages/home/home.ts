@@ -16,11 +16,9 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
               private ble: BLE,
-              private proxBle: BLE,
               private beaconService: BeaconService,
               private toastCtrl: ToastController) {
     this.getAllBeacons()
-    this.scanProximity()
   }
 
   scanBeacon(){
@@ -46,8 +44,14 @@ export class HomePage {
   removeBeacon(beacon: any) {
     this.beaconService.deleteBeacon(beacon)
       .then(() => {
+        for(let i = this.beacons.length; i > 0; i--){
+          if(this.beacons[i].macAddress == beacon.macAddress){
+            this.beacons.splice(i, 1);
+          }
+        }
         this.presentDeleteToast()
       })
+      .catch(() => this.getAllBeacons())
   }
 
   refresh(refresher: any){
@@ -77,23 +81,5 @@ export class HomePage {
       position: 'top'
     });
     toast.present();
-  }
-
-  private scanProximity() {
-    this.scanningProximity = !this.scanningProximity;
-    if(this.scanningProximity){
-      let allIds: string[] = [];
-      this.beacons.forEach((beacon) => {
-        allIds.push(beacon.macAddress);
-      })
-      this.proxBle.startScanWithOptions(allIds, "reportDuplicates").subscribe(
-        foundBeacon => this.calculateDistance(foundBeacon),
-        (err) => console.error(err)
-      )
-    }
-  }
-
-  private calculateDistance(foundBeacon: any) {
-    ß
   }
 }

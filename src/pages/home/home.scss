@@ -37,6 +37,19 @@ page-home {
     max-width: 30px;
   }
 
+  .scanProx {
+    color: #c51a4a;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  .clicked {
+    color: white !important;
+    background-color: #c51a4a;
+  }
+  .notClicked {
+
+  }
+
   .list > .item-wrapper:last-child .item-block {
     border-bottom-color: #c51a4a !important;
   }

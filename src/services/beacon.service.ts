@@ -51,9 +51,10 @@ export class BeaconService {
 
   deleteBeacon(beacon: any) {
     console.log(beacon)
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.http.delete(this.baseURL + "/" + beacon.macAddress)
-        .subscribe(() => resolve())
+        .subscribe(() => resolve(),
+          () => reject())
     })
   }
 }

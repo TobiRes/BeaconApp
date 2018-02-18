@@ -4,7 +4,8 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class BeaconService {
 
-  private baseURL = "http://10.200.20.48:8080/beacon";
+  private baseURL = "http://10.200.18.137:8080/beacon";
+  private otherURL = "http://10.200.20.48:8080/beacon";
   constructor(private http: HttpClient) {
   }
 
@@ -14,7 +15,6 @@ export class BeaconService {
         macAddress: beaconData.macAddress,
         name: beaconData.name
       }
-      console.log(body)
       this.http.post(this.baseURL, body)
         .subscribe(() => resolve())
     })

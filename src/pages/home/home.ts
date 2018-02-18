@@ -35,7 +35,7 @@ export class HomePage {
          let beaconToRegister = this.beaconService.getBeaconToRegister(allBeacons);
          this.confirmBeacon(beaconToRegister);
        })
-     }, 7000);
+     }, 6000);
   }
 
   removeBeacon(beacon: any) {
@@ -52,11 +52,9 @@ export class HomePage {
   }
 
   refresh(refresher: any){
-    this.isLoading = true;
     this.beaconService.getBeacons()
       .then((beacons: any []) => {
         this.beacons = beacons;
-        this.isLoading = false;
         refresher.complete();
       })
       .catch(() => refresher.complete())
